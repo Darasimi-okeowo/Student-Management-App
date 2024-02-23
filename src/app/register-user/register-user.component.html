@@ -1,0 +1,211 @@
+<div class="page-wrapper bg-gra-03 p-t-45 p-b-50" style="background: white;">
+  <div class="wrapper wrapper--w790">
+    <div class="card card-5">
+      <div class="card-heading">
+        <h2 class="title">Registration Form</h2>
+      </div>
+          <!-- Error Message -->
+          <div *ngIf="errorMessages" class="alert alert-danger mb-4 w-50" role="alert">
+            {{ errorMessages }}
+          </div>
+      <div class="card-body">
+        @if (!isSuccessful) {
+        <form
+          (ngSubmit)="f.form.valid && userRegister()"
+          #f="ngForm"
+          novalidate
+        >
+          <div class="form-row">
+            <div class="name">First Name</div>
+            <div class="value">
+              <div class="input-group">
+                <input
+                  class="input--style-5"
+                  type="text"
+                  id="firstName"
+                  name="firstName"
+                  [(ngModel)]="user.firstName"
+                  placeholder="Enter your First Name"
+                  required
+                  minlength="3"
+                  maxlength="20"
+                  #firstName="ngModel"
+                  [ngClass]="{ 'is-invalid': f.submitted && firstName.errors }"
+                />
+                @if (firstName.errors && f.submitted) {
+                <div class="invalid-feedback">
+                  @if (firstName.errors['required']) {
+                  <div>First Name is required</div>
+                  } @if (firstName.errors['minlength']) {
+                  <div>First Name must be at least 3 characters</div>
+                  } @if (firstName.errors['maxlength']) {
+                  <div>First Name must be at most 20 characters</div>
+                  }
+                </div>
+                }
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="name">Last Name</div>
+            <div class="value">
+              <div class="input-group">
+                <input
+                  class="input--style-5"
+                  [(ngModel)]="user.lastName"
+                  type="text"
+                  id="lastName"
+                  name="lastName"
+                  placeholder="Enter your Last Name"
+                  required
+                  minlength="3"
+                  maxlength="20"
+                  #lastName="ngModel"
+                  [ngClass]="{ 'is-invalid': f.submitted && lastName.errors }"
+                />
+                @if (lastName.errors && f.submitted) {
+                <div class="invalid-feedback">
+                  @if (lastName.errors['required']) {
+                  <div>Last Name is required</div>
+                  } @if (lastName.errors['minlength']) {
+                  <div>Last Name must be at least 3 characters</div>
+                  } @if (lastName.errors['maxlength']) {
+                  <div>Last Name must be at most 20 characters</div>
+                  }
+                </div>
+                }
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="name">Email</div>
+            <div class="value">
+              <div class="input-group">
+                <input
+                  class="input--style-5"
+                  [(ngModel)]="user.email"
+                  type="email"
+                  id="email"
+                  name="email"
+                  placeholder="Enter your email"
+                  required
+                  email
+                  #email="ngModel"
+                  [ngClass]="{ 'is-invalid': f.submitted && email.errors }"
+                />
+                @if (email.errors && f.submitted) {
+                <div class="invalid-feedback">
+                  @if (email.errors['required']) {
+                  <div>Email is required</div>
+                  } @if (email.errors['email']) {
+                  <div>Invalid email format</div>
+                  }
+                </div>
+                }
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="name">Role</div>
+            <div class="value">
+              <div class="input-group">
+                <select
+                  [(ngModel)]="user.role"
+                  id="role"
+                  name="role"
+                  class="input--style-5"
+                  required
+                  #role="ngModel"
+                  [ngClass]="{ 'is-invalid': f.submitted && role.errors }"
+                >
+                  <option disabled="disabled" selected="selected">
+                    Select Role
+                  </option>
+                  <option value="ADMIN">Admin</option>
+                  <option value="USER">User</option>
+                </select>
+                @if (role.errors && f.submitted) {
+                <div class="invalid-feedback">
+                  @if (role.errors['required']) {
+                  <div>Role Field is required</div>
+                  }
+                </div>
+                }
+                <div class="select-dropdown"></div>
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="name">Password</div>
+            <div class="value">
+              <div class="input-group">
+                <input
+                  class="input--style-5"
+                  [(ngModel)]="user.password"
+                  type="password"
+                  id="password"
+                  name="password"
+                  placeholder="Enter your password"
+                  required
+                  minlength="6"
+                  #password="ngModel"
+                  [ngClass]="{ 'is-invalid': f.submitted && password.errors }"
+                />
+                @if (password.errors && f.submitted) {
+                <div class="invalid-feedback">
+                  @if (password.errors['required']) {
+                  <div>Password is required</div>
+                  } @if (password.errors['minlength']) {
+                  <div>Password must be at least 6 characters</div>
+                  }
+                </div>
+                }
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="name">Confirm Password</div>
+            <div class="value">
+              <div class="input-group">
+                <input
+                  class="input--style-5"
+                  [(ngModel)]="user.confirmPassword"
+        type="password"
+        id="confirmPassword"
+        name="confirmPassword"
+        placeholder="Confirm your password"
+        required
+        #confirmPassword="ngModel"
+        [ngClass]="{ 'is-invalid': f.submitted && confirmPassword.errors }"
+                />
+                @if (confirmPassword.errors && f.submitted) {
+                  <div class="invalid-feedback">
+                    @if (confirmPassword.errors['required']) {
+                    <div>Confirm Password is required</div>
+                    }
+                </div>
+                }
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="pt-1 mb-4">
+              <input
+              class="btn btn-dark btn-lg btn-block"
+                type="submit"
+                value="Register"
+              />
+            </div>
+          </div>
+          <p class="mb-5 pb-lg-2" style="color: #393f81">
+            Already have an account?
+            <a href="login" style="color: #393f81">Login here</a>
+          </p>
+        </form>
+        } @else {
+        <div class="alert alert-success">Your registration is successful!</div>
+        }
+      </div>
+    </div>
+  </div>
+</div>
